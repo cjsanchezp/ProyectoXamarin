@@ -7,11 +7,25 @@ namespace TodoApp
 {
 	public partial class App : Application
 	{
+        private static TodoDatabase database;
+
+        public static TodoDatabase Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new TodoDatabase();
+                }
+                return database;
+            }
+        }
+        
 		public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+            MainPage = new NavigationPage(new CreatePage());
 		}
 
 		protected override void OnStart ()

@@ -16,12 +16,38 @@ namespace TodoApp.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+            ToolbarResou;
 
             base.OnCreate(bundle);
+
+#if DEBUG
+            CopyDatabase();
+#endif
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }
+#if DEBUG
+        private async void CopyDatabase()
+        {
+            var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            var dbpath = Path.Combine(path, "todo.db3");
+
+            var external = Android.OS.Enviroment
+                .GetExternalStoragePublicDirectory(Android.OS.Enviroment.DirectoryDownloads).AbsolutePath;
+            var externalPath = Path.Combine(external, "todo-backup.db3");
+
+            if (!File.Exists(dbPath)) return;
+            var origin = File.OpenRead(dbPath);
+            var destino = File.Exists(externalPath) ? File.OpenWrite(externalPath) : File.Create(externalPath);
+
+            using (origin)
+            using (destino)
+            {
+                await origin.CopyToAsync(destino);
+            }
+        }
+#endif
     }
 }
 

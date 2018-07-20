@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TodoApp.Helpers;assembly=TodoApp"
+             x:Class="TodoApp.ListTaskPage"
+             Title="Lista de Pendientes">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:DateTimeConverter x:key="DateConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ListView x:Name="LstTodos" ItemTapped="OnItemTapped">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="5" Spacing="2">
+                        <Label Text="{Binding ToDo}"
+                               FontSize="12" TextColor="Red"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Prioridad:" FontSize="10"/>
+                            <Label Text="{Binding Prioridad}"
+                                   FontSize="10" />
+                            <Label Text="Fin :" FontSize="10"/>
+                            <Label Text="{Binding FechaFin,Converter={StaticResource DateConverter}}"
+                                   FontSize="10"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>        
+    </ListView>
+</ContentPage>
